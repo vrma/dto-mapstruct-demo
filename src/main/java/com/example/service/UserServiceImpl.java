@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final UserMapper userMapper;
 
     @Override
     public UserResponse getUserById(long id) {
@@ -26,12 +27,14 @@ public class UserServiceImpl implements UserService {
 
         User user = userDao.findById(id).orElseThrow(() -> new RuntimeException("User not found!!!"));
 
-        userResponse = new UserResponse(
-            user.getId(), 
-            user.getUsername(), 
-            user.getPassword(), 
-            DateTimeFormatter.ISO_LOCAL_DATE.format(user.getDateOfBirth())
-        );
+        // userResponse = new UserResponse(
+        //     user.getId(), 
+        //     user.getUsername(), 
+        //     user.getPassword(), 
+        //     DateTimeFormatter.ISO_LOCAL_DATE.format(user.getDateOfBirth())
+        // );
+
+        userResponse = userMapper.mapUserToUserResponse(user);
 
 
         return userResponse;
