@@ -9,5 +9,11 @@ public record UserResponse(
     long id,
     String name,
     String password,
-    String dob
+    String dob,
+    String status,
+
+    /* A continuacion, se agregan campos para mapear la entidad Contact */
+
+    String mob,
+    String emailId
 ) {}
