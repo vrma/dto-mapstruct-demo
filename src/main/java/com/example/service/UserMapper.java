@@ -2,6 +2,7 @@ package com.example.service;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import com.example.dto.UserResponse;
 import com.example.entity.Contact;
@@ -47,7 +48,18 @@ public interface UserMapper {
     @Mapping(target = "password", ignore = true)
     @Mapping(source = "user.dateOfBirth", target = "dob")
     @Mapping(source = "user.status", target = "status", defaultValue = "INACTIVE")
-    @Mapping(source = "contact.mobileNumber", target = "mob")
+    @Mapping(source = "contact.mobileNumber", target = "mob", qualifiedByName = "maskPhone")
     @Mapping(source = "contact.email", target = "emailId")
     UserResponse mapUserAndContactToUserResponse(User user, Contact contact);
+
+    /*
+     * Para hacer un mapeo personalizado, por ejemplo para enmascarar el numero de
+     * telefono o parte del mismo
+     */
+    @Named("maskPhone")
+    static String getPhoneNumber(String phone) {
+        if (phone.length() <= 4)
+            return phone;
+        return "******" + phone.substring(phone.length() - 4);
+    }
 }
