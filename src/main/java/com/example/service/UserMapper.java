@@ -58,8 +58,6 @@ public interface UserMapper {
      */
     @Named("maskPhone")
     static String getPhoneNumber(String phone) {
-        if (phone.length() <= 4)
-            return phone;
-        return "******" + phone.substring(phone.length() - 4);
+        return phone.replaceAll("\\d(?=\\d{3})", "*");
     }
 }
